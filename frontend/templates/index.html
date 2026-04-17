@@ -1,0 +1,304 @@
+
+<!doctype html>
+<html lang="hi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SmartSewa Complaint Portal</title>
+
+    <!-- Bootstrap CSS + Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Top navigation -->
+    <nav class="navbar navbar-light bg-light px-3">
+      <a class="navbar-brand fw-bold text-primary" href="#">SmartSewa</a>
+      <div class="ms-auto d-flex gap-2">
+        <!-- Language dropdown -->
+        <div class="dropdown">
+          <button
+            class="btn btn-outline-secondary dropdown-toggle"
+            id="langDropdown"
+            data-bs-toggle="dropdown"
+          >
+            <i class="bi bi-translate"></i> Language
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button class="dropdown-item lang-option" data-lang="hi">
+                हिन्दी
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item lang-option" data-lang="en">
+                English
+              </button>
+            </li>
+          </ul>
+        </div>
+        <!-- Dark / Light toggle -->
+        <button id="modeToggle" class="btn btn-outline-secondary">
+          <i id="modeIcon" class="bi bi-moon-stars-fill"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="container py-4">
+      <!-- First three cards side by side -->
+      <div class="row g-4 mb-5">
+        <div class="col-lg-4">
+          <div
+            class="card p-4 text-center"
+            data-bs-toggle="modal"
+            data-bs-target="#modalText"
+          >
+            <i
+              class="bi bi-chat-left-text text-primary"
+              style="font-size: 2rem"
+            ></i>
+            <h5 class="mt-3">✍️ Text Complaint</h5>
+            <p>Type your issue clearly and quickly for faster resolution.</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div
+            class="card p-4 text-center"
+            data-bs-toggle="modal"
+            data-bs-target="#modalVoice"
+          >
+            <i class="bi bi-mic-fill text-success" style="font-size: 2rem"></i>
+            <h5 class="mt-3">🎤 Voice Complaint</h5>
+            <p>Record your voice to explain the problem in your own words.</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div
+            class="card p-4 text-center"
+            data-bs-toggle="modal"
+            data-bs-target="#modalPhoto"
+          >
+            <i
+              class="bi bi-camera-fill text-warning"
+              style="font-size: 2rem"
+            ></i>
+            <h5 class="mt-3">📷 Photo Complaint</h5>
+            <p>
+              Upload a clear photo of the issue to help authorities act quickly.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard cards below -->
+      <div class="row g-4 mb-5">
+        <div class="col-lg-6">
+          <a href="/dashboard" class="text-decoration-none">
+            <div class="card p-4 h-100 d-flex align-items-center">
+              <i
+                class="bi bi-bar-chart-line-fill text-primary"
+                style="font-size: 2rem"
+              ></i>
+              <div class="ms-3">
+                <h4>Dashboard</h4>
+                <p>
+                  View complaint statistics, charts and heatmaps for better
+                  insights.
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-6">
+          <a href="/officer" class="text-decoration-none">
+            <div class="card p-4 h-100 d-flex align-items-center">
+              <i
+                class="bi bi-shield-lock text-danger"
+                style="font-size: 2rem"
+              ></i>
+              <div class="ms-3">
+                <h4>Admin Dashboard</h4>
+                <p>
+                  Authority panel to manage complaints, update statuses and view
+                  history.
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Text Modal -->
+    <div class="modal fade" id="modalText" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form method="post" action="/">
+            <div class="modal-header">
+              <h5 class="modal-title">Submit Text Complaint</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <input
+                type="text"
+                name="name"
+                class="form-control mb-2"
+                placeholder="Your Name"
+                required
+              />
+              <input
+                type="text"
+                name="area"
+                class="form-control mb-2"
+                placeholder="Area / Locality"
+                required
+              />
+              <textarea
+                name="text"
+                class="form-control mb-2"
+                rows="4"
+                placeholder="Complaint Details"
+                required
+              ></textarea>
+              <input type="hidden" name="lat" id="latText" />
+              <input type="hidden" name="lng" id="lngText" />
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">
+                Submit Complaint
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voice Modal -->
+    <div class="modal fade" id="modalVoice" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form method="post" action="/voice" enctype="multipart/form-data">
+            <div class="modal-header">
+              <h5 class="modal-title">Submit Voice Complaint</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <input
+                type="text"
+                name="name"
+                class="form-control mb-2"
+                placeholder="Your Name"
+              />
+              <input
+                type="text"
+                name="area"
+                class="form-control mb-2"
+                placeholder="Area / Locality"
+              />
+              <input
+                type="file"
+                name="audio"
+                class="form-control mb-2"
+                accept="audio/*"
+              />
+              <input type="hidden" name="lat" id="latVoice" />
+              <input type="hidden" name="lng" id="lngVoice" />
+              <small class="text-muted"
+                >Upload a recorded audio file of your complaint.</small
+              >
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">
+                Submit Voice Complaint
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Photo Modal -->
+    <div class="modal fade" id="modalPhoto" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form method="post" action="/photo" enctype="multipart/form-data">
+            <div class="modal-header">
+              <h5 class="modal-title">Submit Photo Complaint</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <input
+                type="text"
+                name="name"
+                class="form-control mb-2"
+                placeholder="Your Name"
+                required
+              />
+              <input
+                type="text"
+                name="area"
+                class="form-control mb-2"
+                placeholder="Area / Locality"
+                required
+              />
+              <input
+                type="file"
+                name="photo"
+                class="form-control mb-2"
+                accept="image/*"
+                required
+              />
+              <input type="hidden" name="lat" id="latPhoto" />
+              <input type="hidden" name="lng" id="lngPhoto" />
+              <small class="text-muted"
+                >Upload a clear photo of the issue.</small
+              >
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-warning">
+                Submit Photo Complaint
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Dark mode toggle -->
+    <script>
+      const root = document.documentElement;
+      const toggle = document.getElementById("modeToggle");
+      const icon = document.getElementById("modeIcon");
+      toggle.addEventListener("click", () => {
+        root.classList.toggle("dark-mode");
+        if (root.classList.contains("dark-mode")) {
+          icon.className = "bi bi-sun-fill";
+        } else {
+          icon.className = "bi bi-moon-stars-fill";
+        }
+      });
+    </script>
+  </body>
+</html>

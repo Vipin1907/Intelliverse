@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Complaint Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script></head><body class="bg-light"><div class="container py-5"><h2 class="text-center text-primary mb-4">📊 Complaint Dashboard</h2><div class="card text-center mb-4 shadow">
+<div class="card-body">
+<h4>Total Complaints</h4>
+<h2 class="text-danger">{{ total }}</h2>
+</div>
+</div><div class="row"><div class="col-md-6 mb-4">
+<div class="card shadow">
+<div class="card-body">
+<h5 class="text-center">Category</h5>
+<canvas id="categoryChart"></canvas>
+</div>
+</div>
+</div><div class="col-md-6 mb-4">
+<div class="card shadow">
+<div class="card-body">
+<h5 class="text-center">Sentiment</h5>
+<canvas id="sentimentChart"></canvas>
+</div>
+</div>
+</div><div class="col-md-6 mb-4">
+<div class="card shadow">
+<div class="card-body">
+<h5 class="text-center">Urgency</h5>
+<canvas id="urgencyChart"></canvas>
+</div>
+</div>
+</div><div class="col-md-6 mb-4">
+<div class="card shadow">
+<div class="card-body">
+<h5 class="text-center">Area</h5>
+<canvas id="areaChart"></canvas>
+</div>
+</div>
+</div></div><div class="text-center mt-3">
+<a href="/" class="btn btn-primary">⬅ Back</a>
+</div></div><script>
+
+// ✅ SAFE DATA (MATCHING BACKEND)
+const categoryData = {{ category_data | tojson | safe }};
+const sentimentData = {{ sentiment_data | tojson | safe }};
+const urgencyData = {{ urgency_data | tojson | safe }};
+const areaData = {{ area_data | tojson | safe }};
+
+// convert function
+function splitData(data){
+  return {
+    labels: data.map(x => x[0]),
+    values: data.map(x => x[1])
+  };
+}
+
+// split
+let cat = splitData(categoryData);
+let sen = splitData(sentimentData);
+let urg = splitData(urgencyData);
+let area = splitData(areaData);
+
+// CATEGORY
+new Chart(document.getElementById('categoryChart'), {
+  type: 'pie',
+  data: {
+    labels: cat.labels,
+    datasets: [{
+      data: cat.values,
+      backgroundColor: ['#ff6384','#36a2eb','#ffcd56','#4bc0c0','#9966ff']
+    }]
+  }
+});
+
+// SENTIMENT
+new Chart(document.getElementById('sentimentChart'), {
+  type: 'bar',
+  data: {
+    labels: sen.labels,
+    datasets: [{
+      label: "Sentiment",
+      data: sen.values,
+      backgroundColor: ['#4caf50','#f44336','#9e9e9e']
+    }]
+  }
+});
+
+// URGENCY
+new Chart(document.getElementById('urgencyChart'), {
+  type: 'doughnut',
+  data: {
+    labels: urg.labels,
+    datasets: [{
+      data: urg.values,
+      backgroundColor: ['#e91e63','#2196f3','#ff9800']
+    }]
+  }
+});
+
+// AREA
+new Chart(document.getElementById('areaChart'), {
+  type: 'bar',
+  data: {
+    labels: area.labels,
+    datasets: [{
+      label: "Area Complaints",
+      data: area.values,
+      backgroundColor: '#007bff'
+    }]
+  }
+});
+
+</script></body>
+</html>

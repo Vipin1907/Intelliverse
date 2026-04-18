@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="hi">
   <head>
@@ -15,11 +14,33 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
       rel="stylesheet"
     />
+    <style>
+      .dark-mode {
+        background-color: #121212;
+        color: #f1f1f1;
+      }
+
+      .dark-mode .card {
+        background-color: #1e1e1e;
+        color: #f1f1f1;
+        border: 1px solid #333;
+      }
+
+      .dark-mode .navbar {
+        background-color: #1e1e1e !important;
+      }
+
+      .dark-mode .modal-content {
+        background-color: #1e1e1e;
+        color: #f1f1f1;
+      }
+    </style>
   </head>
   <body>
     <!-- Top navigation -->
+
+    <!-- Top navigation -->
     <nav class="navbar navbar-light bg-light px-3">
-      <a class="navbar-brand fw-bold text-primary" href="#">SmartSewa</a>
       <div class="ms-auto d-flex gap-2">
         <!-- Language dropdown -->
         <div class="dropdown">
@@ -50,9 +71,14 @@
       </div>
     </nav>
 
+    <!-- Center SmartSewa Title -->
+    <div class="text-center my-3">
+      <h1 class="fw-bold text-primary" style="font-size: 2.5rem">SmartSewa</h1>
+    </div>
+
     <!-- Main content -->
+
     <main class="container py-4">
-      <!-- First three cards side by side -->
       <div class="row g-4 mb-5">
         <div class="col-lg-4">
           <div
@@ -64,8 +90,10 @@
               class="bi bi-chat-left-text text-primary"
               style="font-size: 2rem"
             ></i>
-            <h5 class="mt-3">✍️ Text Complaint</h5>
-            <p>Type your issue clearly and quickly for faster resolution.</p>
+            <h5 class="mt-3" data-key="textTitle">✍️ Text Complaint</h5>
+            <p data-key="textDesc">
+              Type your issue clearly and quickly for faster resolution.
+            </p>
           </div>
         </div>
         <div class="col-lg-4">
@@ -75,8 +103,10 @@
             data-bs-target="#modalVoice"
           >
             <i class="bi bi-mic-fill text-success" style="font-size: 2rem"></i>
-            <h5 class="mt-3">🎤 Voice Complaint</h5>
-            <p>Record your voice to explain the problem in your own words.</p>
+            <h5 class="mt-3" data-key="voiceTitle">🎤 Voice Complaint</h5>
+            <p data-key="voiceDesc">
+              Record your voice to explain the problem in your own words.
+            </p>
           </div>
         </div>
         <div class="col-lg-4">
@@ -89,15 +119,14 @@
               class="bi bi-camera-fill text-warning"
               style="font-size: 2rem"
             ></i>
-            <h5 class="mt-3">📷 Photo Complaint</h5>
-            <p>
+            <h5 class="mt-3" data-key="photoTitle">📷 Photo Complaint</h5>
+            <p data-key="photoDesc">
               Upload a clear photo of the issue to help authorities act quickly.
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Dashboard cards below -->
       <div class="row g-4 mb-5">
         <div class="col-lg-6">
           <a href="/dashboard" class="text-decoration-none">
@@ -107,8 +136,8 @@
                 style="font-size: 2rem"
               ></i>
               <div class="ms-3">
-                <h4>Dashboard</h4>
-                <p>
+                <h4 data-key="dashTitle">Dashboard</h4>
+                <p data-key="dashDesc">
                   View complaint statistics, charts and heatmaps for better
                   insights.
                 </p>
@@ -124,8 +153,8 @@
                 style="font-size: 2rem"
               ></i>
               <div class="ms-3">
-                <h4>Admin Dashboard</h4>
-                <p>
+                <h4 data-key="adminTitle">Admin Dashboard</h4>
+                <p data-key="adminDesc">
                   Authority panel to manage complaints, update statuses and view
                   history.
                 </p>
@@ -135,7 +164,6 @@
         </div>
       </div>
     </main>
-
     <!-- Text Modal -->
     <div class="modal fade" id="modalText" tabindex="-1">
       <div class="modal-dialog">
@@ -298,6 +326,76 @@
         } else {
           icon.className = "bi bi-moon-stars-fill";
         }
+      });
+    </script>
+    <script>
+      const translations = {
+        en: {
+          brand: "SmartSewa",
+          textTitle: "✍️ Text Complaint",
+          textDesc:
+            "Type your issue clearly and quickly for faster resolution.",
+          voiceTitle: "🎤 Voice Complaint",
+          voiceDesc:
+            "Record your voice to explain the problem in your own words.",
+          photoTitle: "📷 Photo Complaint",
+          photoDesc:
+            "Upload a clear photo of the issue to help authorities act quickly.",
+          dashTitle: "Dashboard",
+          dashDesc:
+            "View complaint statistics, charts and heatmaps for better insights.",
+          adminTitle: "Admin Dashboard",
+          adminDesc:
+            "Authority panel to manage complaints, update statuses and view history.",
+        },
+        hi: {
+          brand: "स्मार्टसेवा",
+          textTitle: "✍️ लिखित शिकायत",
+          textDesc:
+            "तेजी से समाधान के लिए अपनी समस्या स्पष्ट रूप से टाइप करें।",
+          voiceTitle: "🎤 आवाज की शिकायत",
+          voiceDesc:
+            "अपनी समस्या को अपने शब्दों में समझाने के लिए आवाज रिकॉर्ड करें।",
+          photoTitle: "📷 फोटो शिकायत",
+          photoDesc:
+            "अधिकारियों को कार्रवाई करने में मदद के लिए स्पष्ट फोटो अपलोड करें।",
+          dashTitle: "डैशबोर्ड",
+          dashDesc: "शिकायत के आंकड़े, चार्ट और हीटमैप देखें।",
+          adminTitle: "एडमिन डैशबोर्ड",
+          adminDesc: "शिकायतों को मैनेज करने और स्थिति अपडेट करने के लिए पैनल।",
+        },
+      };
+
+      function changeLanguage(lang) {
+        // 1. Logo change
+        document.querySelector(".navbar-brand").innerText =
+          translations[lang].brand;
+
+        // 2. Scan all elements with data-key and update text
+        const elements = document.querySelectorAll("[data-key]");
+        elements.forEach((el) => {
+          const key = el.getAttribute("data-key");
+          if (translations[lang][key]) {
+            el.innerText = translations[lang][key];
+          }
+        });
+
+        // 3. Save selection
+        localStorage.setItem("selectedLang", lang);
+      }
+
+      // Click Listener
+      document.querySelectorAll(".lang-option").forEach((item) => {
+        item.addEventListener("click", function () {
+          const lang = this.getAttribute("data-lang");
+          changeLanguage(lang);
+        });
+      });
+
+      // Auto-load on refresh
+      window.addEventListener("DOMContentLoaded", () => {
+        const savedLang = localStorage.getItem("selectedLang") || "en";
+        changeLanguage(savedLang);
       });
     </script>
   </body>
